@@ -7,7 +7,7 @@ cap = cv2.VideoCapture(1)
 
 def main():
     cv2.namedWindow('feedback')
-    cv2.moveWindow('feedback', 100, 100)
+    cv2.moveWindow('feedback', 600, 600)
 
     while True:
         ret, frame = cap.read()
