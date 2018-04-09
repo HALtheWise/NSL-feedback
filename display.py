@@ -9,10 +9,25 @@ def main():
     cv2.namedWindow('feedback')
     cv2.moveWindow('feedback', 600, 600)
 
+    downsample = False
+    guide = False
+    brightness = 50
+    # cv2.createTrackbar("brightness", 'feedback', 0, 100)
+
     while True:
         ret, frame = cap.read()
 
-        cv2.imshow('feedback', frame)
+        if downsample:
+            # TODO: this
+            pass
+
+        if guide:
+            # TODO: this
+            pass
+
+        if brightness != 50:
+            # TODO: this
+            pass
 
         key = chr(cv2.waitKey(1) & 0xFF)
         if key == 'q':
@@ -21,6 +36,12 @@ def main():
         if key == 's':
             # TODO: save the image
             pass
+        if key == 'd':
+            downsample = not downsample
+        if key == 'g':
+            guide = not guide
+
+        cv2.imshow('feedback', frame)
 
 
 if __name__ == '__main__':
