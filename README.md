@@ -10,9 +10,9 @@ To run:
 Desired Functionality (**BOLD** required by Thursday, *Italics* desired by Thursday):
 
 - [] Simulate camera settings
-	- [] **Brightness**
+	- [x] **Brightness** 
 	- [] *Contrast*
-	- [] Zoom
+	- [] Zoom 
 	- [] Translation
 	- [] Rotation
 	- [] Keystone
@@ -21,7 +21,7 @@ Desired Functionality (**BOLD** required by Thursday, *Italics* desired by Thurs
 - [] Live editing camera settings
 	- [] *Sliders below window for each setting*
 - [] Overlay Effects
-	- [] **4 crosshairs on a circle (custom opencv fine)**
+	- [x] **4 crosshairs on a circle (custom opencv fine)** - g
 	- [] Center Dot (custom opencv fine)
 	- [] Arbitrary Initial Condition Images (overlaying PNG)
 - [] **Save images** 
