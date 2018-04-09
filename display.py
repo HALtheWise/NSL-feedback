@@ -18,8 +18,8 @@ def main():
         nonlocal brightness
         brightness = val
 
-    cv2.createTrackbar("brightness", 'feedback', 0, 100, updateBrightness)
-    cv2.setTrackbarMin('brightness', 'feedback', -100)
+    cv2.createTrackbar("brightness", 'feedback', 0, 255, updateBrightness)
+    cv2.setTrackbarMin('brightness', 'feedback', -255)
 
     while True:
         ret, frame = cap.read()
@@ -33,7 +33,7 @@ def main():
             pass
 
         if brightness != 0:
-            bright = np.full_like(frame, abs(brightness) * 255 / 100)
+            bright = np.full_like(frame, abs(brightness))
 
             if brightness > 0:
                 cv2.add(frame, bright, frame)
