@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import cv2
+import numpy as np
 
 cap = cv2.VideoCapture(1)
 
@@ -19,7 +20,6 @@ def main():
     downsample = False
     guide = True
     brightness = 50
-    # cv2.createTrackbar("brightness", 'feedback', 0, 100)
 
     while True:
         ret, frame = cap.read()
@@ -35,9 +35,13 @@ def main():
             cv2.drawMarker(frame, (center[0]+markerrad, center[1]),(0,0,255),cv2.MARKER_CROSS,20,2,cv2.FILLED)
             pass
 
-        if brightness != 50:
-            # TODO: this
-            pass
+        if brightness != 0:
+            bright = np.full_like(frame, abs(brightness))
+
+            if brightness > 0:
+                cv2.add(frame, bright, frame)
+            else:
+                cv2.subtract(frame, bright, frame)
 
         
         key = chr(cv2.waitKey(1) & 0xFF)
