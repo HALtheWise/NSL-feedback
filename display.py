@@ -3,7 +3,10 @@
 import cv2
 import numpy as np
 
-cap = cv2.VideoCapture(1)
+import time
+import datetime
+
+cap = cv2.VideoCapture(0)
 
 
 def main():
@@ -70,8 +73,11 @@ def main():
             # Quit if the "q" key is pressed over the window
             break
         if key == 's':
-            # TODO: save the image
-            pass
+            # TODO:  Save in image directory to be gitignored
+            savename = datetime.datetime.now().strftime("%Y-%M-%d-%H:%M")
+            savename += '.png'
+            print(savename)
+            cv2.imwrite(savename,frame)
         if key == 'd':
             downsample = not downsample
         if key == 'g':
