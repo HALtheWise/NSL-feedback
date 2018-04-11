@@ -13,7 +13,7 @@ Desired Functionality (**BOLD** required by Thursday, *Italics* desired by Thurs
 	- [x] **Brightness** 
 	- [] *Contrast*
 	- [] Zoom 
-	- [] Translation
+	- [x] Translation - asdf
 	- [] Rotation
 	- [] Keystone
 	- [] Frame Rate
@@ -24,7 +24,7 @@ Desired Functionality (**BOLD** required by Thursday, *Italics* desired by Thurs
 	- [x] **4 crosshairs on a circle (custom opencv fine)** - g
 	- [] Center Dot (custom opencv fine)
 	- [x] Arbitrary Initial Condition Images (overlaying PNG)
-- [x] **Save images** 
+- [x] **Save images** - x
 - [] Save Video
 
 
