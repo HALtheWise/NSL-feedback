@@ -6,7 +6,7 @@ import numpy as np
 import time
 import datetime
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 
 
 def main():
