@@ -23,8 +23,8 @@ Desired Functionality (**BOLD** required by Thursday, *Italics* desired by Thurs
 - [] Overlay Effects
 	- [x] **4 crosshairs on a circle (custom opencv fine)** - g
 	- [] Center Dot (custom opencv fine)
-	- [] Arbitrary Initial Condition Images (overlaying PNG)
-- [] **Save images** 
+	- [x] Arbitrary Initial Condition Images (overlaying PNG)
+- [x] **Save images** 
 - [] Save Video
 
 
