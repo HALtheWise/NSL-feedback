@@ -35,7 +35,7 @@ def main():
     cv2.setTrackbarMin('brightness', 'feedback', -255)
 
     # Set up overlay images
-    overframe = cv2.imread("white.jpg")
+    overframe = cv2.imread("overlaytest.png")
     overframe = cv2.resize(overframe, dsize=(int(width), int(height)))
 
     compensation = cv2.imread("transfer-func-blurred.png")
