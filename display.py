@@ -104,7 +104,7 @@ def main():
             break
         if key == 'x':
             # TODO:  Save in image directory to be gitignored
-            savename = datetime.datetime.now().strftime("%Y-%M-%d-%H:%M")
+            savename = 'photos/'+datetime.datetime.now().strftime("%Y-%m-%d--%H-%M-%S")
             savename += '.png'
             print(savename)
             cv2.imwrite(savename, frame)
