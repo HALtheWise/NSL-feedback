@@ -36,12 +36,20 @@ def main():
 
     # Set up overlay images
     overframe = cv2.imread("white.jpg")
-    overframe = cv2.resize(overframe, dsize=(int(width), int(height)));
+    overframe = cv2.resize(overframe, dsize=(int(width), int(height)))
+
+    compensation = cv2.imread("transfer-func-blurred.png")
+    compensation = cv2.resize(compensation, dsize=(int(width), int(height)))
+    compensation = np.array(compensation, dtype=np.float32) / 256.0
+    compensation = (np.negative(compensation)+1)+np.min(compensation)
+
+    # print(compensation[100,100:200])
 
     # Set up flags
+    compensate = False  # Compensate for screen brightness bloom
     downsample = False
     guide = True
-    brightness = 50
+    brightness = 0
     trailing_average_weights = []  # Last element is weight to give previous frame, etc...
     old_frames = []
     overlay = False
@@ -71,6 +79,13 @@ def main():
             else:
                 cv2.subtract(frame, bright, frame)
 
+        if compensate:
+            frame = np.array(frame, dtype=np.float32)
+
+            frame = frame * compensation
+
+            frame = np.array(frame, dtype=np.uint8)
+
         if trailing_average_weights:
             old_frames.append(np.copy(frame))
             if len(old_frames) >= len(trailing_average_weights):
@@ -99,6 +114,8 @@ def main():
             guide = not guide
         if key == 'o':
             overlay = not overlay
+        if key == 'c':
+            compensate = not compensate
         if key == 'w':
             windowy += -1
             cv2.moveWindow('feedback', windowx, windowy)
