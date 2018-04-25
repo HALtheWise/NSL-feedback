@@ -6,8 +6,12 @@ import numpy as np
 import time
 import datetime
 
-cap = cv2.VideoCapture(1)
+print('Using camera1')
 
+cap = cv2.VideoCapture(1))
+
+# cap.get(cv2.CAP_PROP_FRAME_COUNT)
+print('success or failure')
 
 def main():
     # Set up window
@@ -15,8 +19,13 @@ def main():
     windowx = 600
     windowy = 200
     cv2.moveWindow('feedback', windowx, windowy)
-
+    ret, frame = cap.read()
+    
+    cv2.imshow('feedback', frame)
     # Get window values
+    # print("something")
+    time.sleep(5.5)    # pause 5.5 seconds
+    # print("something")
 
     width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)  # float
     height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
