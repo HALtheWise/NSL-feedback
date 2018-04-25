@@ -1,17 +1,15 @@
 #!/usr/bin/env python3
+import datetime
+import time
+from typing import Optional
 
 import cv2
 import numpy as np
 
-import time
-import datetime
-
-print('Using camera1')
-
 cap = cv2.VideoCapture(1)
 
-# cap.get(cv2.CAP_PROP_FRAME_COUNT)
-print('success or failure')
+xvid = cv2.VideoWriter_fourcc(*'XVID')
+
 
 def main():
     # Set up window
@@ -20,15 +18,14 @@ def main():
     windowy = 200
     cv2.moveWindow('feedback', windowx, windowy)
     ret, frame = cap.read()
-    
-    cv2.imshow('feedback', frame)
-    # Get window values
-    # print("something")
-    # time.sleep(5.5)    # pause 5.5 seconds
-    # print("something")
 
-    width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)  # float
-    height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
+    cv2.imshow('feedback', frame)
+    time.sleep(0.5)  # pause 0.5 seconds
+
+    videocap = None  # type: Optional[cv2.VideoWriter]
+
+    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     center = (int(width / 2), int(height / 2))
     markerrad = int(height / 4)
 
@@ -50,7 +47,7 @@ def main():
     compensation = cv2.imread("transfer-func-blurred.png")
     compensation = cv2.resize(compensation, dsize=(int(width), int(height)))
     compensation = np.array(compensation, dtype=np.float32) / 256.0
-    compensation = (np.negative(compensation)+1)+np.min(compensation)
+    compensation = (np.negative(compensation) + 1) + np.min(compensation)
 
     # print(compensation[100,100:200])
 
@@ -107,16 +104,31 @@ def main():
         if overlay:
             frame = overframe
 
+        if videocap:
+            videocap.write(frame)
+
         key = chr(cv2.waitKey(1) & 0xFF)
         if key == 'q':
             # Quit if the "q" key is pressed over the window
             break
         if key == 'x':
-            # TODO:  Save in image directory to be gitignored
-            savename = 'photos/'+datetime.datetime.now().strftime("%Y-%m-%d--%H-%M-%S")
+            savename = 'photos/' + datetime.datetime.now().strftime("%Y-%m-%d--%H-%M-%S")
             savename += '.png'
             print(savename)
             cv2.imwrite(savename, frame)
+
+        if key == 'z':
+            # Toggle video recording
+            if videocap:
+                print("Stopping recording")
+                videocap.release()
+                videocap = None
+            else:
+                savename = 'videos/' + datetime.datetime.now().strftime("%Y-%m-%d--%H-%M-%S")
+                savename += '.avi'
+                print("Starting recording: " + savename)
+                videocap = cv2.VideoWriter(savename, xvid, 30.0, (width, height))
+
         if key == 'r':
             downsample = not downsample
         if key == 'g':
