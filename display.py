@@ -8,7 +8,7 @@ import datetime
 
 print('Using camera1')
 
-cap = cv2.VideoCapture(1))
+cap = cv2.VideoCapture(1)
 
 # cap.get(cv2.CAP_PROP_FRAME_COUNT)
 print('success or failure')
@@ -24,7 +24,7 @@ def main():
     cv2.imshow('feedback', frame)
     # Get window values
     # print("something")
-    time.sleep(5.5)    # pause 5.5 seconds
+    # time.sleep(5.5)    # pause 5.5 seconds
     # print("something")
 
     width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)  # float
@@ -125,6 +125,10 @@ def main():
             overlay = not overlay
         if key == 'c':
             compensate = not compensate
+        if key == 'b':
+            brightness += 1
+        if key == 'v':
+            brightness += -1
         if key == 'w':
             windowy += -1
             cv2.moveWindow('feedback', windowx, windowy)
