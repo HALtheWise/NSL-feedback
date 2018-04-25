@@ -6,6 +6,12 @@ To run:
 > pipenv shell 
 > python display.py
 
+Potential working DSLR to Python:
+
+> sudo modprobe v4l2loopback
+> gphoto2 --stdout --capture-movie | gst-launch-1.0 fdsrc fd=0 ! decodebin name=dec ! queue ! videoconvert ! video/x-raw,format=YUY2 ! tee ! v4l2sink device=/dev/video1
+
+
 
 Desired Functionality (**BOLD** required by Thursday, *Italics* desired by Thursday):
 
