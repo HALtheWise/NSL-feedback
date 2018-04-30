@@ -12,7 +12,11 @@ xvid = cv2.VideoWriter_fourcc(*'XVID')
 
 
 def main():
-    # Set up window
+    # Setup controls window
+    cv2.namedWindow('controls')
+    cv2.imshow('controls', np.zeros([1, 800]))
+
+    # Set up image window
     cv2.namedWindow('feedback')
     windowx = 600
     windowy = 200
@@ -37,8 +41,10 @@ def main():
         brightness = val
 
     # Set up trackbars
-    cv2.createTrackbar("brightness", 'feedback', 0, 255, updateBrightness)
-    cv2.setTrackbarMin('brightness', 'feedback', -255)
+    cv2.createTrackbar('brightness', 'controls', 0, 255, updateBrightness)
+    # cv2.createTrackbar('compensation', 'controls', 0, 200, None)
+    cv2.setTrackbarPos('compensation','controls', 100)
+    cv2.setTrackbarMin('brightness', 'controls', -255)
 
     # Set up overlay images
     overframe = cv2.imread("overlaytest.png")
