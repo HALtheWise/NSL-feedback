@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import datetime
+import os
 import time
 from typing import Optional
 
@@ -46,9 +47,23 @@ def main():
     cv2.setTrackbarPos('compensation','controls', 100)
     cv2.setTrackbarMin('brightness', 'controls', -255)
 
+    overlay_idx = 0
+    overlay_frame = None
+
     # Set up overlay images
-    overframe = cv2.imread("overlaytest.png")
-    overframe = cv2.resize(overframe, dsize=(int(width), int(height)))
+    def increment_overlay(delta):
+        overlay_names = os.listdir('overlays')
+        overlay_names.sort()
+        nonlocal overlay_idx, overlay_frame
+
+        overlay_idx += delta
+        overlay_idx %= len(overlay_names)
+
+        overlay_frame = cv2.imread('overlays/'+overlay_names[overlay_idx])
+        overlay_frame = cv2.resize(overlay_frame, dsize=(int(width), int(height)))
+        print('Displaying overlay frame "{}"'.format(overlay_names[overlay_idx]))
+
+    increment_overlay(0)
 
     compensation = cv2.imread("transfer-func-blurred.png")
     compensation = cv2.resize(compensation, dsize=(int(width), int(height)))
@@ -108,7 +123,7 @@ def main():
                 frame = np.array(frame, dtype=np.uint8)
 
         if overlay:
-            frame = overframe
+            frame = overlay_frame
 
         if videocap:
             videocap.write(frame)
@@ -141,6 +156,10 @@ def main():
             guide = not guide
         if key == 'o':
             overlay = not overlay
+        if key == 'p':
+            increment_overlay(1)
+        if key == 'i':
+            increment_overlay(-1)
         if key == 'c':
             compensate = not compensate
         if key == 'b':
