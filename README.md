@@ -43,4 +43,21 @@ Desired Functionality (**BOLD** required by Thursday, *Italics* desired by Thurs
 - [x] **Save images** - x
 - [] Save Video
 
+Steps before Presentation:
 
+- [] Charlie fixes settings so we don't have stupid lighting stuff
+- [] Image Demonstrations of:
+  - [] Recursion
+	- [] "Chaos"
+	- [] Growth
+- [] Within Chaos, at least one video each of:
+	- [] Low frequency SC
+	- [] Medium Frequency SC
+	- [] High Frequency SC
+- [] MATLAB Code Modification
+	- [] Video Input
+		- [] Output a vector of max frequency content at each frame
+		- [] Output a vector of angle intensity calculation
+			- [] Do not include 90-180-270-360 as max
+	- [] Graph frequency vs time for various starting conditions
+	- [] Graph angle intensity vs time for various starting conditions
