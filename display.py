@@ -43,11 +43,24 @@ def main():
         nonlocal brightness
         brightness = val
 
+    compensation = None
+
+    def updateCompensation(val):
+        nonlocal compensation
+        intensity = val / 100.0
+        compensation = cv2.imread("transfer-func-blurred.png")
+        compensation = cv2.resize(compensation, dsize=(int(width), int(height)))
+        compensation = np.array(compensation, dtype=np.float32) / 256.0
+        compensation = np.negative(compensation - np.max(compensation))  # scale of 0 ... 0.1
+        compensation = compensation * intensity
+        compensation = compensation + (1 - np.max(compensation))
+
+    updateCompensation(100)
+
     # Set up trackbars
     cv2.createTrackbar('brightness', 'controls', 0, 255, updateBrightness)
-    # cv2.createTrackbar('compensation', 'controls', 0, 200, None)
-    cv2.setTrackbarPos('compensation','controls', 100)
     cv2.setTrackbarMin('brightness', 'controls', -255)
+    cv2.createTrackbar('lcd_compensation', 'controls', 100, 200, updateCompensation)
 
     overlay_idx = 0
     overlay_frame = None
@@ -61,21 +74,15 @@ def main():
         overlay_idx += delta
         overlay_idx %= len(overlay_names)
 
-        overlay_frame = cv2.imread('overlays/'+overlay_names[overlay_idx])
+        overlay_frame = cv2.imread('overlays/' + overlay_names[overlay_idx])
         overlay_frame = cv2.resize(overlay_frame, dsize=(int(width), int(height)))
         print('Displaying overlay frame "{}"'.format(overlay_names[overlay_idx]))
 
     increment_overlay(0)
 
-    compensation = cv2.imread("transfer-func-blurred.png")
-    compensation = cv2.resize(compensation, dsize=(int(width), int(height)))
-    compensation = np.array(compensation, dtype=np.float32) / 256.0
-    compensation = (np.negative(compensation) + 1) + np.min(compensation)
-
     # print(compensation[100,100:200])
 
     # Set up flags
-    compensate = False  # Compensate for screen brightness bloom
     downsample = False
     guide = True
     brightness = 0
@@ -108,12 +115,11 @@ def main():
             else:
                 cv2.subtract(frame, bright, frame)
 
-        if compensate:
-            frame = np.array(frame, dtype=np.float32)
+        frame = np.array(frame, dtype=np.float32)
 
-            frame = frame * compensation
+        frame = frame * compensation
 
-            frame = np.array(frame, dtype=np.uint8)
+        frame = np.array(frame, dtype=np.uint8)
 
         if trailing_average_weights:
             old_frames.append(np.copy(frame))
@@ -162,8 +168,6 @@ def main():
             increment_overlay(1)
         if key == 'i':
             increment_overlay(-1)
-        if key == 'c':
-            compensate = not compensate
         if key == 'b':
             brightness += 1
         if key == 'v':
