@@ -157,6 +157,7 @@ def main():
                 savename += '.avi'
                 print("Starting recording: " + savename)
                 videocap = cv2.VideoWriter(savename, xvid, 30.0, (width, height))
+                overlay = False
 
         if key == 'r':
             downsample = not downsample
