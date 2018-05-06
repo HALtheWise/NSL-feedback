@@ -9,6 +9,8 @@ import numpy as np
 
 cap = cv2.VideoCapture(1)
 
+# cap.set(cv2.CAP_PROP_AUTO_EXPOSURE, 1)
+
 xvid = cv2.VideoWriter_fourcc(*'XVID')
 
 
